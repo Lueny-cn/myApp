@@ -9,13 +9,11 @@ const createHashHistory = require( 'history/lib/createHashHistory');
 
 const App = require("./app.jsx");
 const Index = require("./js/index");
-const personMsg = require("./js/personalMsg");
-const Personal = require("./js/personal");
 const Login = require("./js/login");
-const Exam = require("./js/exam");
-const Test = require("./js/test");
-const Admin = require("./js/admin");
-
+const Profile = require("./js/profile");
+const Account = require("./js/account");
+const Report = require("./js/report");
+const Budget = require("./js/budget");
 // const LoginAction = require('./action/loginAction');
 // const LoginStore = require('./store/loginStore');
 // const connectToStores = require("alt-utils/lib/connectToStores");
@@ -64,12 +62,11 @@ function requireLogin(nextState, replace){
 let routes = <Router history={createHashHistory()}>
     <Route path="/" component={App}>
         <IndexRoute component={Index} />
-        <Route path="login" components={Login} />
-        <Route path="personMsg" component={personMsg} onEnter={requireLogin}/>
-        <Route path="exam" component={Exam}/>
-        <Route path="test" component={Test}/>
-        <Route path="personal" component={Personal} onEnter={requireLogin}/>
-        <Route path="admin" component={Admin} onEnter={requireLogin}/>
+        <Route path="user/login" components={Login} />
+        <Route paht="user/profile" component={Profile} />
+        <Route paht="user/account" component={Account} />
+        <Route paht="user/report" component={Report} />
+        <Route paht="user/budget" component={Budget} />
     </Route>
 </Router>;
 ReactDom.render(routes,document.getElementById("App"));
