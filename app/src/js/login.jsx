@@ -38,6 +38,7 @@ class Login extends React.Component {
         let history = this.props.history;
         return this.listener = (store) =>{
             let result = store.result;
+            debugger
             if(result && result.type == 1){
                 message.success(result.msg + ',即将跳往首页',2);
                 setTimeout(function () {
