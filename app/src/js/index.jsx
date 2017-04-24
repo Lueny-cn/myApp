@@ -71,7 +71,7 @@ class Index extends React.Component {
             dataIndex: 'index',
             key: 'index',
             }, {
-            title: '金额',
+            title: '余额',
             dataIndex: 'money',
             key: 'money',
         }];
@@ -101,7 +101,7 @@ class Index extends React.Component {
                     </span>
                     <h3>消费比例</h3>
                 </div>
-                <Table columns={columns} dataSource={data} pagination={false} />
+                <Table columns={columns1} dataSource={data1} pagination={false} />
             </div>
 
             <div className="sidelright">

@@ -62,11 +62,11 @@ function requireLogin(nextState, replace){
 let routes = <Router history={createHashHistory()}>
     <Route path="/" component={App}>
         <IndexRoute component={Index} />
-        <Route path="user/login" components={Login} />
-        <Route paht="user/profile" component={Profile} />
-        <Route paht="user/account" component={Account} />
-        <Route paht="user/report" component={Report} />
-        <Route paht="user/budget" component={Budget} />
+        <Route path="user/login" component={Login} />
+        <Route path="user/profile" componen={Profile} />
+        <Route path="user/account" component={Account} />
+        <Route path="user/report" component={Report} />
+        <Route path="user/budget" component={Budget} />
     </Route>
 </Router>;
 ReactDom.render(routes,document.getElementById("App"));

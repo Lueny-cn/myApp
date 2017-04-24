@@ -1,0 +1,151 @@
+.account-list {
+    ul {
+        list-style: none;
+    }
+    .clearfix {
+        overflow: hidden;
+        zoom: 1;
+    }
+
+    ul.account-tb {
+        float: left;
+        background: #f7f7f7;
+
+        li {
+            float: left;
+            height: 33px;
+            width: 96px;
+            padding: 0 0 0 0px;
+            border-left: #e4e4e4 solid 1px;
+            border-bottom: #e4e4e4 solid 1px;
+            line-height: 33px;
+            font-family: Verdana, Geneva, sans-serif;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        li.l1{
+            color:#333;
+            text-align:center;
+            border-left:0;
+        }
+        li.l2{
+            width:111px;
+            color:#000; 
+            text-align:
+            center;
+        }
+        li.l3{
+            width:119px;
+            text-align:center;
+        }
+        li.l4{
+            width:119px;
+            color:#000;
+            text-align:center;
+        }
+        li.l5{
+            width:225px;
+            padding:0 0 0 10px;
+            position:relative;
+        }
+         
+        .dropdowm {
+            background: url("../img/ltbg.gif");
+            display: none;
+            height: 5px;
+            position: absolute;
+            right: 10px;
+            width: 8px;
+            top: 15px;
+            overflow: hidden;
+        }
+
+        &:hover {
+            background: #eee;
+            .dropdowm {
+                display: block;
+                background-position: 0 -5px;
+            }
+            .dropup {
+                display: block;
+            }
+        }
+        
+    }
+    
+}
+
+.list-edit-box {
+    display: block;
+    font-size: 14px;
+
+    .type-avatar {
+        float: left;
+        margin: 10px 10px 10px 0;
+    }
+    .uploadImg {
+        display: inline-block;
+        background: url("../img/define.png") repeat;
+        width: 115px;
+        height: 115px;
+    }
+    .list-box-content {
+        float: left;
+        margin: 10px;
+        width: 450px;
+        line-height: 22px
+    }
+
+    .list-box-ul {
+        overflow: hidden;
+        clear: both;
+    }
+    .list-box-li {
+        float: left;
+        margin: 2px 5px;
+
+        input.account-money, input.detail-input {
+            width: 100px;
+            border: #999 solid 1px;
+            height: 24px;
+            line-height: 22px;
+            text-indent: 5px;
+            color: #666;
+        }
+        input.detail-input {
+            width: 240px;
+        }
+        .account-select, .way-select{
+            margin: 0 0 0 5px;;
+            width: 97px;
+            height: 24px;
+            line-height: 22px;
+        }
+
+        .way-select{
+            width: 120px;
+            span.ant-select {
+                width: 120px!important;
+            }
+        }
+         
+        input.account-money,
+        .account-date-select, 
+        .detail-input,
+        .ant-calendar-picke,
+        .ant-select {
+            margin: 8px 5px; 
+        }
+        
+     }
+
+    .list-box-btn {
+        margin-top: 50px;
+
+        button {
+            margin-top: 10px;
+        } 
+    }
+
+}
