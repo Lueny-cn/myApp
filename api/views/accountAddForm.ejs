@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+      <form action="/user/account/add" method="post">
+       <div>
+        账本id: <input type="text" name="account_id">
+       </div>
+       <div>
+        用户id: <input type="text" name = "user_id">
+       </div>
+       <div>
+        时间: <input type="text" name = "time">
+       </div>
+       <div>
+        类型: <input type="text" name="type">
+       </div>
+       <div>
+        简介: <input type="text" name = "detail">
+       </div>
+       <div>
+        图片: <input type="text" name = "avatar">
+       </div>
+       <div>
+        金额: <input type="text" name="money">
+       </div>
+
+       <div>
+        <input type="submit" class="ui button fluid" value="添加">
+       </div>
+        
+      </form>
+  </body>
+  <script type="text/javascript">
+
+
+  </script>
+</html>

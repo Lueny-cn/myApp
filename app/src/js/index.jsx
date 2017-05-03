@@ -105,7 +105,9 @@ class Index extends React.Component {
             </div>
 
             <div className="sidelright">
-                <Button className="lg-button addAccont" type="primary" icon="add" size="large">记一笔</Button>
+                <Link to="/user/account">
+                    <Button className="lg-button addAccont" type="primary" icon="add" size="large">记一笔</Button>
+                </Link>
                 <div className="myaccountBox">
                     <div className="myaccount-title">
                         我的账户

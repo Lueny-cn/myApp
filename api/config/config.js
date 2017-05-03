@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports={
   port: process.env.PORT || 3000,
-  mongodb:'mongodb://localhost:27017/test2',
+  mongodb:'mongodb://localhost:27017/account',
   schemeConf: path.join(__dirname, './default.scheme'),
   renderConf: {
     root:  path.join(__dirname, '../views'),
@@ -16,7 +16,7 @@ module.exports={
     }
   },
   corsOption: {
-    origin:'http://localhost.test.com:6004',
+    origin:'http://localhost:6004',
     allowMethods:'GET,HEAD,PUT,POST,DELETE',
     exposeHeaders:'*',
     allowHeaders: '*',

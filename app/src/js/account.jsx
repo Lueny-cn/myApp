@@ -3,9 +3,9 @@ const React = require("react");
 const Nav = require("../module/nav");
 const {Link} = require("react-router");
 const connectToStores = require("alt-utils/lib/connectToStores");
-const IndexAction = require("../action/accountAction");
 const IndexStore = require("../store/indexStore");
-
+const AccountAction = require('../action/accountAction');
+const AccountStore = require("../store/accountStore")
 const IndexItem = require("../subItem/indexItem");
 
 import { Carousel, Table, Icon, Button, Tabs } from 'antd';
@@ -13,10 +13,17 @@ const AccountForm = require("../module/accountForm");
 const AccountListItem = require("../module/accountListItem");
 const TabPane = Tabs.TabPane;
 
-class Index extends React.Component {
+class Account extends React.Component {
 	constructor(props) {
 			super(props);
 			this.state = {
+				type: "",
+				money: 0,
+				time: "",
+				avatar: "",
+				detail: "",
+				user_id: "",
+				accountbook_id: "",
 			}
 	}
 
@@ -32,6 +39,30 @@ class Index extends React.Component {
 		console.log(key);
 	}
 
+
+	componentWillMount(){
+
+    }
+
+   
+
+    componentWillUnmount(){
+		
+    }
+
+    static getStores() {
+        return [AccountStore];
+    }
+
+    static getPropsFromStores() {
+        return AccountStore.getState();
+    }
+
+    setValue(key, value) {
+        this.state[key] = value;
+        this.setState(this.state);
+    }
+	
 
 
 	render() {
@@ -104,7 +135,7 @@ class Index extends React.Component {
 
 
 
-			const accountType = ["out", "in","debit","transfer"]
+			const accountType = ["out", "income","debit","transfer"]
 
 			const accountList = [{
 				date: "2017-04-22",
@@ -164,6 +195,13 @@ class Index extends React.Component {
 
 									<div className="account-list">
 										<h3>账目清单</h3>
+										<ul className="clearfix account-tb account-tb-title">
+											<li className="l1">时间</li>
+											<li className="l2">类型</li>
+											<li className="l3">金额</li>
+											<li className="l4">账本</li>
+											<li className="l5 gray" >备注</li>
+										</ul>
 										{
 											accountList.map( (item,index) => {
 											return  <AccountListItem key = {index}

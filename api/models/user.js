@@ -39,16 +39,6 @@ const User = new Schema({
         default: {},
         index: true
     },
-    "school": {
-        type: String,
-        default: "",
-        index: true
-    },
-    "education": {
-        type: String,
-        default: "",
-        index: true
-    },
     "created": {
         type: Date,
         default: Date.now

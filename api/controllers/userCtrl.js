@@ -136,9 +136,7 @@ exports.update =  function* () {
             nickname: user.nickname,
             gender: user.gender,
             tel: user.tel,
-            birthday: user.birthday,
-            school: user.school,
-            education: user.education
+            birthday: user.birthday
         };
 
         let result = yield UserModel.updateByEmail(email, data);

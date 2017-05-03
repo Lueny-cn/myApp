@@ -6,15 +6,45 @@ import {Form, Input, Button, Checkbox ,Icon, Upload, DatePicker,
 const FormItem = Form.Item;
 const CreateForm = Form.create;
 const RangePicker = DatePicker.RangePicker;
+const TreeType = require("../config/tyeeType")
+const AccountAction = require('../action/accountAction');
+const AccountStore = require("../store/accountStore")
+
 
 class AccountForm extends React.Component {
 
    constructor(props) {
         super(props);
         this.state = {
-          value: "餐饮饮食"
+          value: "餐饮饮食",
+          type: "",
+          money: 0,
+          time: "",
+          avatar: "",
+          detail: "",
+          accountbook_id: "",
         };
-  }
+    }
+  
+    static getStores() {
+        return [AccountStore];
+    }
+
+    static getPropsFromStores() {
+        return AccountStore.getState();
+    }
+
+
+    addSubmit() {
+       
+    }
+
+   
+
+    setValue(key, value) {
+        this.state[key] = value;
+        this.setState(this.state);
+    }
 
 
   handleSubmit(e) {
@@ -22,20 +52,43 @@ class AccountForm extends React.Component {
       let { type } = this.props
           , value;
 
-      const rangeValue = fieldsValue['range-picker'];
-      const values = {
-        ...fieldsValue,
-        'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-        'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')]
-      };
-      this.props.form.validateFields((err, values) => {
-      if (!err) {
-          console.log('Received values of form: ', values);
-      }
-      value = values;
-      });
 
+      this.props.form.validateFields((err, fieldsValue) => {
+          if (err) {
+            return;
+          }
+
+          // Should format date value before submit.
+          const rangeValue = fieldsValue['range-picker'];
+          const values = {
+            ...fieldsValue,
+            'time': fieldsValue['time'].format('YYYY-MM-DD')
+            // 'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')]
+          };
+        
+          console.log('Received values of form: ', values);
+
+  
+          let  data = {
+              type: values.way,
+              money: values.money,
+              time: values.time,
+              avatar: "",
+              detail: values.detail,
+              accountbook_name: values.accoountbook,
+              account_type: this.props.type
+          }
+
+            AccountAction.addAccount(data);
+      });
+  
   }
+
+  // handleToggle() {
+  //   $('#stateBut').on('click',function(){
+  //   $('#class1content').toggle();
+  //   })
+  // }
 
   onChangeWay(value) {
      onChange = (value) => {
@@ -64,131 +117,6 @@ class AccountForm extends React.Component {
       wrapperCol: { span: 10 },
     };
 
-    //Todo:  独立出来
-    const treeData = [{
-      label: '基本生活',
-      value: '0-0',
-      key: '0-0',
-      children: [{
-        label: '餐饮饮食',
-        value: '0-0-1',
-        key: '0-0-1',
-      }, {
-        label: '水果零食',
-        value: '0-0-2',
-        key: '0-0-2',
-      }, {
-        label: '日常用品',
-        value: '0-0-3',
-        key: '0-0-3',
-      }, {
-        label: '柴米油盐',
-        value: '0-0-4',
-        key: '0-0-4',
-      }, {
-        label: '物业水电',
-        value: '0-0-5',
-        key: '0-0-5',
-      }, {
-        label: '医药保健',
-        value: '0-0-6',
-        key: '0-0-6',
-      }],
-      }, {
-        label: '交通通讯',
-        value: '0-1',
-        key: '0-1',
-        children: [{
-          label: '交通费',
-          value: '0-1-1',
-          key: '0-1-1',
-      }, {
-          label: '话费网费',
-          value: '0-1-2',
-          key: '0-1-2',
-      },{
-         label: '养车费',
-         value: '0-1-3',
-         key: '0-1-3',
-      }],
-      }, {
-        label: '文化娱乐',
-        value: '0-2',
-        key: '0-2',
-        children: [{
-          label: '旅游娱乐',
-          value: '0-2-1',
-          key: '0-2-1',
-      }, {
-          label: '博乐彩票',
-          value: '0-2-2',
-          key: '0-2-2',
-      },{
-         label: '书籍音像',
-         value: '0-2-3',
-         key: '0-2-3',
-      },{
-         label: '数码产品',
-         value: '0-2-4',
-         key: '0-2-4',
-      },{
-         label: '教育培训',
-         value: '0-2-5',
-         key: '0-2-5',
-      }],
-      },{
-        label: '美容装扮',
-        value: '0-3',
-        key: '0-3',
-        children: [{
-          label: '服饰装扮',
-          value: '0-3-1',
-          key: '0-3-1',
-      },{
-          label: '化妆品美容',
-          value: '0-3-2',
-          key: '0-3-2',
-      }],
-      },{
-        label: '人情往来',
-        value: '0-4',
-        key: '0-4',
-        children: [{
-          label: '人际往来',
-          value: '0-4-1',
-          key: '0-4-1',
-      },{
-          label: '礼品礼金',
-          value: '0-4-2',
-          key: '0-4-2',
-      },{
-          label: '孝敬长辈',
-          value: '0-4-3',
-          key: '0-4-3',
-      }],
-      },{
-        label: '其他',
-        value: '0-5',
-        key: '0-5',
-        children: [{
-          label: '房产车产',
-          value: '0-5-1',
-          key: '0-5-1',
-      },{
-          label: '投资亏损',
-          value: '0-5-2',
-          key: '0-5-2',
-      },{
-          label: '电器家居',
-          value: '0-5-3',
-          key: '0-5-3',
-      },{
-          label: '其它杂项',
-          value: '0-5-4',
-          key: '0-5-4',
-      }]
-    }];
-
     console.info("AccountForm ", this.props)
     return <Form className="acountForm"
               onSubmit={this.handleSubmit.bind(this) } key="5">
@@ -206,7 +134,7 @@ class AccountForm extends React.Component {
               label="时间"
               {...formItemLayout}
             >
-              {getFieldDecorator('date-picker', config)(
+              {getFieldDecorator('time', config)(
               <DatePicker />
             )}
             </FormItem>
@@ -214,23 +142,34 @@ class AccountForm extends React.Component {
               label="账户"
               {...formItemLayout}
             >
-              <Select defaultValue="我的钱包">
-                <Option value="mypocket">我的钱包</Option>
-                <Option value="alipay">支付宝</Option>
-              </Select>
+              {getFieldDecorator('accoountbook', {
+                rules: [
+                  { required: true, message: '选择你的账户!' },
+                ],
+              })(
+                <Select placeholder="请选择账户">
+                  <Option value="mypocket">我的钱包</Option>
+                  <Option value="alipay">支付宝</Option>
+            </Select>
+          )}
             </FormItem>
             <FormItem 
               label="用途"
               {...formItemLayout}
             >
-              <TreeSelect
-                style={{ width: 300 }}
-                defaultValue={this.state.value}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={treeData}
-                treeDefaultExpandAll={false}
-                onChangeWay={this.onChangeWay.bind(this)}
-              />
+              {getFieldDecorator('way', {
+                  rules: [{ required: true, message: '用途为空,请输入' }],
+                })(
+                  <TreeSelect
+                    placeholder={"比如: 餐饮饮食"}
+                    style={{ width: 300 }}
+                    dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                    treeData={TreeType}
+                    treeDefaultExpandAll={false}
+                    onChangeWay={this.onChangeWay.bind(this)}
+                  />
+                )}
+              
             </FormItem>
             <FormItem 
               label="备注"
