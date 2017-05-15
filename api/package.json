@@ -28,5 +28,8 @@
     "merge-descriptors": "^1.0.1",
     "mongoose": "^4.7.4",
     "validator": "^6.2.0"
+  },
+  "devDependencies": {
+    "isodate": "^0.1.4"
   }
 }

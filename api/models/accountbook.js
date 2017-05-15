@@ -25,8 +25,8 @@ const Accountbook = new Schema({
         type: String,
         index: true
     },
-    "user_id": {
-        type: Stting,
+    "user_email": {
+        type: String,
         index: true
     },
     "created": {

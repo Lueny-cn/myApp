@@ -77,4 +77,4 @@ class Budget extends React.Component {
 	}
 }
 
-module.exports = connectToStores(Index);
+module.exports = connectToStores(Budget);

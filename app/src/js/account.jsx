@@ -226,4 +226,4 @@ class Account extends React.Component {
 	}
 }
 
-module.exports = connectToStores(Index);
+module.exports = connectToStores(Account);

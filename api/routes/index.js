@@ -57,4 +57,8 @@ module.exports = function (app) {
   app.use(route.get( '/user/account/list', accountCtrl.list ));
   app.use(route.post( '/user/account/update', accountCtrl.update ));  
   app.use(route.get( '/user/account/delete', accountCtrl.delete ));
+  // app.use(route.get( '/user/account/incomeMoney', accountCtrl.incomeMoney ));
+  app.use(route.get( '/user/account/incomeMoney/:dateRange', accountCtrl.incomeMoney ));
+  app.use(route.get( '/user/account/outMoney/:dateRange', accountCtrl.outMoney ));
+  app.use(route.get( '/user/account/outMoney', accountCtrl.outMoney ));
 }

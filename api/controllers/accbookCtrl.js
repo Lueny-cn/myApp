@@ -24,7 +24,7 @@ module.exports = {
                 data: res
             }
         }
-   },
+    },
 
     list: function *(option) {
         let page = this.query.page || 1;
@@ -38,16 +38,16 @@ module.exports = {
             code: 200,
             data: result
         }
-   },
+    },
 
-   update: function() {
-       let {
+    update: function() {
+        let {
             name,
             type,
             money,
             detail,
         } = this.request.body;
-        
+
         let data = {
             name,
             type,
@@ -57,7 +57,7 @@ module.exports = {
 
         let res = yield AccBookModel.update(data);
 
-        
+
         if(res.nModified  && res.nModified === 1) {
             this.body = {
                 code: 200,
@@ -75,5 +75,8 @@ module.exports = {
             }
         }
 
-   }
+    },
+
+  
 }
+

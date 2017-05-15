@@ -5,7 +5,7 @@ const {Link} = require("react-router");
 const connectToStores = require("alt-utils/lib/connectToStores");
 const IndexAction = require("../action/indexAction");
 const IndexStore = require("../store/indexStore");
-
+const AccountStore = require("../store/accountStore")
 
 const IndexItem = require("../subItem/indexItem");
 
@@ -89,7 +89,9 @@ class Index extends React.Component {
                 <div className="sideleft">
                  <div className="topbar-title tb" >
                     <span className="titright">本月预算支出<strong>￥0</strong>元， 已经支出<strong>￥7.50</strong>元    
-                        <a href="/user/budget" class="btn_yu" hidefocus="ture">建立预算</a>
+                        <Link to="/user/budget" className="btn_yu">
+                          建立预算
+                        </Link>
                     </span>
                     <h3>收支情况</h3>
                 </div>
