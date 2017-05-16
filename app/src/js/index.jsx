@@ -8,7 +8,7 @@ const IndexStore = require("../store/indexStore");
 const AccBookAction = require('../action/accBookAction');
 const AccBookStore = require("../store/accBookStore")
 
-const AccountStore = require("../store/accountStore")
+// const AccountStore = require("../store/accountStore")
 
 
 
@@ -24,6 +24,7 @@ class Index extends React.Component {
     this.state = {
     }
     IndexAction.getConsumState();
+    AccBookAction.loadList();
   }
 
   static getStores() {
