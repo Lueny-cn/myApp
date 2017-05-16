@@ -70,6 +70,13 @@ console.log("user_email=== ", user_email)
     },
 
     list: function* (option) {
+        let user_email;
+        if (this.session.user && this.session.user.email) {
+            user_email = this.session.user.email
+        } else {
+            user_email = "default@account.com"
+        }
+
         let page = this.query.page || 1;
         let limit = 10;
         let skip = (page - 1) * limit;
