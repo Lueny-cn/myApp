@@ -45,7 +45,7 @@ class Index extends React.Component {
   render() {
     let {result, accBook} = this.props;
     console.log("result   ---",result )
-     console.log("accBook   ---",accBook )
+     console.log("accBook   --- index",accBook )
     let state = this.state,
       title = '';
     if (!result) {
@@ -131,7 +131,7 @@ class Index extends React.Component {
           </Link>
           <div className="myaccountBox">
             <div className="myaccount-title">
-              我的账户
+              我的账本
                         <a href="">
                 <Icon type="setting" />
               </a>

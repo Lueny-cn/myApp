@@ -37,7 +37,7 @@ module.exports = {
 
         let result = yield AccountBookModel.find({
             "user_email": user_email
-        }).skip(skip).limit(limit);
+        })
         
         this.body = {
             code: 200,

@@ -22,6 +22,7 @@ module.exports = {
             account_type
         } = this.request.body;
 console.log("this.request.body === ",this.request.body)
+console.log("user_email=== ", user_email)
         let data = {
             type,
             money,
@@ -79,16 +80,16 @@ console.log("this.request.body === ",this.request.body)
             accountbook_id } = this.request.body;
         switch (option) {
             case "time":
-                result = yield AccountModel.find({ "time": time }).skip(skip).limit(limit);
+                result = yield AccountModel.find({ "time": time });
                 break;
             case "type":
-                result = yield AccountModel.find({ "type": type }).skip(skip).limit(limit);
+                result = yield AccountModel.find({ "type": type });
                 break;
             case "accountbook_id":
-                result = yield AccountModel.find({ "accountbook_id": accountbook_id }).skip(skip).limit(limit);
+                result = yield AccountModel.find({ "accountbook_id": accountbook_id });
                 break;
             default:
-                result = yield AccountModel.find().skip(skip).limit(limit);
+                result = yield AccountModel.find();
         }
 
 

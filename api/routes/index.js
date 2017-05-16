@@ -70,5 +70,6 @@ module.exports = function (app) {
   app.use(route.get( '/user/account/consumState', accountCtrl.consumState ));
   app.use(route.get( '/user/account/outMoney', accountCtrl.outMoney ));
   app.use(route.get( '/user/accountBook/list', accBookCtrl.list ));
+  app.use(route.post( '/user/accountBook/add', accBookCtrl.add ));
   app.use(route.post( '/upload', uploadCtrl.upload ));
 }
