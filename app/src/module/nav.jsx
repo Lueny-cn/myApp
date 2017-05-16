@@ -59,12 +59,8 @@ class Nav extends React.Component {
           <Icon type="appstore"/>记账
         </Link>}>
         </SubMenu>
-        <SubMenu title={<Link to="/user/report">
-          <Icon type="appstore"/>报表
-        </Link>}>
-        </SubMenu>
         <SubMenu title={<Link to="/user/budget">
-          <Icon type="appstore"/>预算
+          <Icon type="appstore"/>管理
         </Link>}>
         </SubMenu>
 

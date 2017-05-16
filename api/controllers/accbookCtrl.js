@@ -1,4 +1,4 @@
-const AccBookModel = require("../models/account")
+const AccountBookModel = require("../models/accountbook")
 
 module.exports = {
     add: function *() {
@@ -16,8 +16,7 @@ module.exports = {
             detail,
         }
 
-        let res = yield AccBookModel.add(data);
-        console.log(res)
+        let res = yield AccountBookModel.add(data);
         if (res !== {}) {
             this.body = {
                 code: 200,
@@ -26,13 +25,19 @@ module.exports = {
         }
     },
 
-    list: function *(option) {
+    list: function *() {
         let page = this.query.page || 1;
         let limit = 10;
         let skip = (page-1)*limit;
-        let result;
         
-        let result = yield UserModel.find().skip(skip).limit(limit);
+        let user_email;
+        if(this.session && this.session.user) {
+            user_email = this.session.user.email;
+        }
+
+        let result = yield AccountBookModel.find({
+            "user_email": user_email
+        }).skip(skip).limit(limit);
         
         this.body = {
             code: 200,
@@ -40,7 +45,7 @@ module.exports = {
         }
     },
 
-    update: function() {
+    update: function*() {
         let {
             name,
             type,
@@ -55,7 +60,7 @@ module.exports = {
             detail,
         };
 
-        let res = yield AccBookModel.update(data);
+        let res = yield AccountBookModel.update(data);
 
 
         if(res.nModified  && res.nModified === 1) {

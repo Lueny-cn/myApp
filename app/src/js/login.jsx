@@ -1,9 +1,9 @@
 "use strict"
 const React = require("react");
-const {Tabs}  = require('antd');
+const {Tabs} = require('antd');
 const Nav = require("../module/nav");
 const TabPane = Tabs.TabPane;
-const {Form, Input, Button, Checkbox, Row, Col,Radio ,message}  = require('antd');
+const {Form, Input, Button, Checkbox, Row, Col, Radio, message} = require('antd');
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const LoginAction = require('../action/loginAction');
@@ -26,30 +26,35 @@ class Login extends React.Component {
             isLogPsd: undefined,
             isRegMail: undefined,
             isRegPsd: undefined,
-            isPsdAgain:undefined
+            isPsdAgain: undefined
         };
 
     }
-    componentWillMount(){
+    componentWillMount() {
         LoginStore.listen(this.getListener());
     }
 
-    getListener(){
+    setCookie(name, value, second, domain, path) {
+        document.cookie = name + "=" + encodeURIComponent(value == undefined ? "" : value) + (second ? "; maxAge=" + second : '') + "; domain=" + (domain ? domain : document.domain) + "; path=" + (path ? path : "/");
+
+    }
+    getListener() {
         let history = this.props.history;
-        return this.listener = (store) =>{
+        return this.listener = (store) => {
             let result = store.result;
-            debugger
-            if(result && result.type == 1){
-                message.success(result.msg + ',即将跳往首页',2);
+
+            if (result && result.type == 1) {
+                this.setCookie('userEmail', result.email, 4 * 3600, ".account.com", "/")
+                message.success(result.msg + ',即将跳往首页', 2);
                 setTimeout(function () {
-                    history.pushState(null,'/')
-                },3000)
+                    history.pushState(null, '/')
+                }, 3000)
             }
 
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         LoginStore.unlisten(this.listener);
     }
 
@@ -79,45 +84,45 @@ class Login extends React.Component {
 
     testReg(key) {
         let value = this.state[key];
-        if (key == "logEmail" || key == 'regEmail'){
+        if (key == "logEmail" || key == 'regEmail') {
 
 
             if (/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(value)) {
                 if (key == 'logEmail') {
-                    this.setState({isLogMail:true});
-                }else{
-                    this.setState({isRegMail:true});
+                    this.setState({ isLogMail: true });
+                } else {
+                    this.setState({ isRegMail: true });
                 }
-            }else{
+            } else {
                 if (key == 'logEmail') {
-                    this.setState({isLogMail:false});
-                }else{
-                    this.setState({isRegMail:false});
+                    this.setState({ isLogMail: false });
+                } else {
+                    this.setState({ isRegMail: false });
                 }
             }
-        }else if(key == 'loginPsd' || key == 'regPsd'){
-            if(value.length <= 20 && value.length >= 6){
-                key == 'loginPsd'?
-                    this.setState({isLogPsd:true})
+        } else if (key == 'loginPsd' || key == 'regPsd') {
+            if (value.length <= 20 && value.length >= 6) {
+                key == 'loginPsd' ?
+                    this.setState({ isLogPsd: true })
                     :
-                    this.setState({isRegPsd:true});
-            }else{
-                key == 'loginPsd'?
-                    this.setState({isLogPsd:false})
+                    this.setState({ isRegPsd: true });
+            } else {
+                key == 'loginPsd' ?
+                    this.setState({ isLogPsd: false })
                     :
-                    this.setState({isRegPsd:false});
+                    this.setState({ isRegPsd: false });
             }
-        }else {
-            if((value.length <= 20 && value.length >= 6) && value === this.state.regPsd){
-                this.setState({isPsdAgain:true});
-            }else{
-                this.setState({isPsdAgain:false});
+        } else {
+            if ((value.length <= 20 && value.length >= 6) && value === this.state.regPsd) {
+                this.setState({ isPsdAgain: true });
+            } else {
+                this.setState({ isPsdAgain: false });
 
             }
         }
     }
 
-    loginout(){
+    loginout() {
         LoginAction.logOut();
     }
 
@@ -126,68 +131,68 @@ class Login extends React.Component {
         const state = this.state;
 
         return <div className="f-page login-reg">
-                <Nav />
+            <Nav />
             <div className="login">
 
                 <Tabs type="card">
                     <TabPane tab="登录" key="1" className="loginTitle">
                         <Form horizontal>
                             <FormItem
-                              label="电子邮箱："
-                              labelCol={{span: 6}}
-                              wrapperCol={{span: 14}}
-                              required
-                              hasFeedback
-                              validateStatus={state.isLogMail==undefined ?"":(state.isLogMail?'success':'error')}
+                                label="电子邮箱："
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 14 }}
+                                required
+                                hasFeedback
+                                validateStatus={state.isLogMail == undefined ? "" : (state.isLogMail ? 'success' : 'error')}
                             >
                                 <Input type="text" id="logEmail"
-                                       name="logEmail"
-                                       placeholder="请输入邮箱"
-                                       value={state.logEmail}
-                                       onChange={(e)=> {
-                                           this.setValue('logEmail', e.target.value)
-                                       }}
-                                       onBlur={()=> {
-                                           this.testReg('logEmail')
-                                       }}/>
+                                    name="logEmail"
+                                    placeholder="请输入邮箱"
+                                    value={state.logEmail}
+                                    onChange={(e) => {
+                                        this.setValue('logEmail', e.target.value)
+                                    }}
+                                    onBlur={() => {
+                                        this.testReg('logEmail')
+                                    }} />
                             </FormItem>
                             <FormItem
-                              id="loginPsd"
-                              label="密码："
-                              labelCol={{span: 6}}
-                              wrapperCol={{span: 14}}
-                              required
-                              hasFeedback
-                              validateStatus={state.isLogPsd==undefined ?"":(state.isLogPsd?'success':'error')}
+                                id="loginPsd"
+                                label="密码："
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 14 }}
+                                required
+                                hasFeedback
+                                validateStatus={state.isLogPsd == undefined ? "" : (state.isLogPsd ? 'success' : 'error')}
                             >
                                 <Input type="password" id="loginPsd"
-                                       name="loginPsd"
-                                       placeholder="请输入6-20位密码"
-                                       value={state.loginPsd}
-                                       onChange={(e)=> {
-                                           this.setValue('loginPsd', e.target.value)
-                                       }}
-                                       onBlur={()=> {
-                                           this.testReg('loginPsd')
-                                       }}/>
+                                    name="loginPsd"
+                                    placeholder="请输入6-20位密码"
+                                    value={state.loginPsd}
+                                    onChange={(e) => {
+                                        this.setValue('loginPsd', e.target.value)
+                                    }}
+                                    onBlur={() => {
+                                        this.testReg('loginPsd')
+                                    }} />
                             </FormItem>
                             <FormItem
-                              wrapperCol={{span: 14, offset: 6}}>
+                                wrapperCol={{ span: 14, offset: 6 }}>
                                 <label>
                                     <Checkbox name="agreement" value={this.state.agreement}
-                                              onChange={this.setValue.bind(this, 'agreement')}/> 记住登录
+                                        onChange={this.setValue.bind(this, 'agreement')} /> 记住登录
                                 </label>
                             </FormItem>
                             <Row>
                                 <Col span="14" offset="6">
                                     <Button type="primary"
-                                            htmlType="submit"
-                                            span="14"
-                                            className="ant-btn-submit"
-                                            disable={state.isLogMail && state.isLogPsd ? 'false':'true'}
-                                            onClick={()=> {
-                                                this.loginSubmit()
-                                            }}>
+                                        htmlType="submit"
+                                        span="14"
+                                        className="ant-btn-submit"
+                                        disable={state.isLogMail && state.isLogPsd ? 'false' : 'true'}
+                                        onClick={() => {
+                                            this.loginSubmit()
+                                        }}>
                                         确定登陆
                                     </Button>
                                 </Col>
@@ -198,90 +203,90 @@ class Login extends React.Component {
                     <TabPane tab="注册" key="2">
                         <Form horizontal>
                             <FormItem
-                              label="电子邮箱："
-                              labelCol={{span: 6}}
-                              wrapperCol={{span: 14}}
-                              required
-                              hasFeedback
-                              validateStatus={state.isRegMail==undefined ? '': (state.isRegMail?"success": "error")}
+                                label="电子邮箱："
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 14 }}
+                                required
+                                hasFeedback
+                                validateStatus={state.isRegMail == undefined ? '' : (state.isRegMail ? "success" : "error")}
                             >
                                 <Input type="text"
-                                       id="regEmail"
-                                       name="regEmail"
-                                       placeholder="请输入邮箱"
-                                       value={state.regEmail}
-                                       onChange={(e)=> {
-                                           this.setValue('regEmail', e.target.value)
-                                       }}
-                                       onBlur={()=> {
-                                           this.testReg('regEmail')
-                                       }}
+                                    id="regEmail"
+                                    name="regEmail"
+                                    placeholder="请输入邮箱"
+                                    value={state.regEmail}
+                                    onChange={(e) => {
+                                        this.setValue('regEmail', e.target.value)
+                                    }}
+                                    onBlur={() => {
+                                        this.testReg('regEmail')
+                                    }}
                                 />
                             </FormItem>
                             <FormItem
-                              id="regPsd"
-                              label="密码："
-                              labelCol={{span: 6}}
-                              wrapperCol={{span: 14}}
-                              required
-                              hasFeedback
-                              validateStatus={state.isRegPsd==undefined ?'':(state.isRegPsd?'success':'error')}
+                                id="regPsd"
+                                label="密码："
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 14 }}
+                                required
+                                hasFeedback
+                                validateStatus={state.isRegPsd == undefined ? '' : (state.isRegPsd ? 'success' : 'error')}
                             >
                                 <Input type="password"
-                                       id="regPsd"
-                                       name="regPsd"
-                                       placeholder="请输入密码"
-                                       value={state.regPsd}
-                                       onChange={(e)=> {
-                                           this.setValue('regPsd', e.target.value)
-                                       }}
-                                       onBlur={()=> {
-                                           this.testReg('regPsd')
-                                       }}
+                                    id="regPsd"
+                                    name="regPsd"
+                                    placeholder="请输入密码"
+                                    value={state.regPsd}
+                                    onChange={(e) => {
+                                        this.setValue('regPsd', e.target.value)
+                                    }}
+                                    onBlur={() => {
+                                        this.testReg('regPsd')
+                                    }}
                                 />
                             </FormItem>
                             <FormItem
-                              id="psdAgain"
-                              label="重新密码："
-                              labelCol={{span: 6}}
-                              wrapperCol={{span: 14}}
-                              required
-                              hasFeedback
-                              validateStatus={state.isPsdAgain==undefined ?'':(state.isPsdAgain?'success':'error')}
+                                id="psdAgain"
+                                label="重新密码："
+                                labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 14 }}
+                                required
+                                hasFeedback
+                                validateStatus={state.isPsdAgain == undefined ? '' : (state.isPsdAgain ? 'success' : 'error')}
                             >
                                 <Input type="password"
-                                       id="psdAgain"
-                                       name="psdAgain"
-                                       placeholder="请重复输入密码"
-                                       value={this.state.psdAgain}
-                                       onChange={(e)=> {
-                                           this.setValue('psdAgain', e.target.value)
-                                       }}
-                                       onBlur={()=> {
-                                           this.testReg('psdAgain')
-                                       }}
+                                    id="psdAgain"
+                                    name="psdAgain"
+                                    placeholder="请重复输入密码"
+                                    value={this.state.psdAgain}
+                                    onChange={(e) => {
+                                        this.setValue('psdAgain', e.target.value)
+                                    }}
+                                    onBlur={() => {
+                                        this.testReg('psdAgain')
+                                    }}
                                 />
                             </FormItem>
                             <Row>
                                 <Col span="14" offset="6">
                                     <Button type="primary"
-                                            htmlType="submit"
-                                            className="ant-btn-submit"
-                                            disabled={state.isRegMail && state.isRegPsd && state.isPsdAgain ? false: true}
-                                            onClick={()=> {
-                                                this.resSubmit()
-                                            }}>
+                                        htmlType="submit"
+                                        className="ant-btn-submit"
+                                        disabled={state.isRegMail && state.isRegPsd && state.isPsdAgain ? false : true}
+                                        onClick={() => {
+                                            this.resSubmit()
+                                        }}>
                                         确定注册
                                     </Button>
 
-                                    <button onClick={()=>{this.loginout()}}>退出</button>
+                                    <button onClick={() => { this.loginout() }}>退出</button>
                                 </Col>
                             </Row>
                         </Form>
                     </TabPane>
                 </Tabs>
             </div>
-          </div>;
+        </div>;
     }
 }
 ;

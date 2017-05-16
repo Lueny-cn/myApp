@@ -6,6 +6,11 @@ class IndexStore{
     this.bindActions(IndexAction);
 
   }
+   onGetConsumStateSuccess(result){
+        this.result = result;
+    }
+
+    onGetConsumStateGFail(){}
 
 }
 module.exports = Flux.createStore(IndexStore);

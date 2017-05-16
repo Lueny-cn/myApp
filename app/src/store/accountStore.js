@@ -21,23 +21,12 @@ class AccountStore{
     onDeleteSuccess(result){
         this.result = result;
     }
-
-    onLoginSuccess(result){
+    onLoadListSuccess(result){
         this.result = result;
     }
 
-    onRegisterSuccess(results){
-        this.result = results;
-    }
-
-    onLogoutSuccess(result){
-        this.result = result;
-    }
-
-    onIsLoginSuccess(result){
-        this.isLogin = result;
-
-    }
+  
+  
 
 
 

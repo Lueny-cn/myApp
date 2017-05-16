@@ -1,4 +1,5 @@
 const UserModel = require('../models/user');
+const AccountBookModel = require('../models/accountbook');
 
 //列出所有用户数据，支持分页
 exports.list = function *(){
@@ -54,11 +55,18 @@ exports.signup = function *() {
         password: password
     };
     let userInfo = yield UserModel.add(user);
+    let book = yield AccountBookModel({
+        "user_email": email,
+        "name": "我的钱包",
+        "type": "现金账户",
+        "money": 0
+    }).save();
     this.body = {
         code: 200,
         type: 2,
         msg: '注册成功',
-        email: userInfo.email
+        email: userInfo.email,
+        book: book
     };
 };
 
@@ -67,6 +75,9 @@ exports.signin = function* () {
     let email = _user.email;
     let password = _user.password;
     let userInfo = yield UserModel.findByEmail(email);
+
+    console.log("userInfo",userInfo)
+    console.log("password",password)
     if (!userInfo ||  userInfo.password !== password) {
         this.body = {
             result: 'error',
@@ -87,7 +98,8 @@ exports.signin = function* () {
     date.setTime(date.getTime() + expireDays * 24 * 3600 * 1000);
     this.cookies.set("userEmail", userInfo.email, {
         maxAge: date,
-        domain: "localhost.test.com"
+        domain: "localhost.account.com",
+        httpOnly: false
     });
 
     this.body = {

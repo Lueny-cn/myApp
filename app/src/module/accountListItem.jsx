@@ -1,6 +1,6 @@
 "use strict"
 const React = require("react");
-import {Form, Input, Button, Select, TreeSelect, DatePicker} from 'antd';
+import {Form, Input, Button, Select, TreeSelect, DatePicker, Cascader} from 'antd';
 import moment from "moment"
 // 推荐在入口文件全局设置 locale
 import 'moment/locale/zh-cn';
@@ -31,15 +31,24 @@ class AccountListItem extends React.Component {
   render() {
 
     let { accountItem } = this.props;
-    console.info("accountItem===>", accountItem);
+    const displayRender = (labels, selectedOptions) => labels.map((label, i) => {
+			const option = selectedOptions[i];
+			if (i === labels.length - 1) {
+				return (
+				<span key={option.value}>
+					{label}
+				</span>
+				);
+			}
+		});
 
     return <div>
        <div className="account-list">
           <ul className="clearfix account-tb" onClick={this.handleToggle.bind(this)}>
-            <li className="l1">{accountItem.date}</li>
+            <li className="l1">{accountItem.time}</li>
             <li className="l2">{accountItem.type} </li>
             <li className="l3"><span className="green">{accountItem.money}</span></li>
-            <li className="l4">{accountItem.account}</li>
+            <li className="l4">{accountItem.accountbook_name}</li>
             <li className="l5 gray" title="神仙水">{accountItem.detail}<span className="dropdowm"></span></li>
           </ul>
           <div className="list-edit-box">
@@ -59,13 +68,10 @@ class AccountListItem extends React.Component {
                   </Select>
                 </li>
                 <li className="list-box-li">
-                  <TreeSelect
-                    className="way-select"
-                    defaultValue={this.state.value}
-                    dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                    treeData={TreeType}
-                    treeDefaultExpandAll={false}
-                    onChangeWay={this.onChangeWay.bind(this)}
+                  <Cascader
+                    options={TreeType}
+                    displayRender={displayRender}
+                    style={{ width: 290 }}
                   />
                 </li>
 

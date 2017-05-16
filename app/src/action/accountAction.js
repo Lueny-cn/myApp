@@ -1,6 +1,3 @@
-/**
- * Created by zyy on 2016/12/28.
- */
 "use strict";
 const Flux = require("pin-alt/src/flux");
 import { message } from 'antd';
@@ -11,10 +8,11 @@ class AccountAction {
             add:'http://localhost:3000/user/account/add',
             list:'http://localhost:3000/user/account/list',
             update:'http://localhost:3000/user/account/update',
-            remove: 'http://localhost:3000/user/account/delete'
+            remove: 'http://localhost:3000/user/account/delete',
+            loadList: 'http://localhost:3000/user/account/list'
         };
         this.generateActions('addSuccess','addFail','deleteSuccess','deleterFail',
-        'isLoginSuccess','isLoginFail',"listSucess", "listFail", "updateSucess","updateFail");
+        'isLoginSuccess','isLoginFail',"listSucess", "listFail", "updateSucess","updateFail","loadListSuccess","loadListFail");
     }
 
     login(email,psd){
@@ -126,6 +124,27 @@ class AccountAction {
                 },
                 error: ()=> {
                     this.addFail();
+                }
+            });
+    }
+
+    loadList() {
+        let sUrl = this.url["loadList"];
+            $.ajax({
+                url: sUrl,
+                type: 'get',
+                dataType:"json",
+                xhrFields: {withCredentials : true},
+                crossDomain: true,
+                success: (result)=> {
+                    if(result) {
+                        this.loadListSuccess(result.data);
+                    }else {
+                        this.loadListFail();
+                    }
+                },
+                error: ()=> {
+                    this.loadListFail();
                 }
             });
     }

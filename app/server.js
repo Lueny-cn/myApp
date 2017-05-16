@@ -2,9 +2,8 @@
 var express = require('express');
 var superagent = require('superagent');
 var app = express();
-// var HOST_admin = "http://admin.pintest.mail.163.com";
 var IS_NODE_ENV_PRODUCTION = (process.env.NODE_ENV === 'production');
-var HOST = IS_NODE_ENV_PRODUCTION?"http://test.system.com":"http://testtest.system.com";
+var HOST = "http://localhost.account.com:6004";
 var path = require("path");
 var fs = require("fs");
 var request = require('request');

@@ -16,7 +16,7 @@ module.exports={
     }
   },
   corsOption: {
-    origin:'http://localhost:6004',
+    origin:'http://localhost.account.com:6004',
     allowMethods:'GET,HEAD,PUT,POST,DELETE',
     exposeHeaders:'*',
     allowHeaders: '*',

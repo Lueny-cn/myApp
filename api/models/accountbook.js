@@ -10,11 +10,13 @@ const Schema = mongoose.Schema;
 const Accountbook = new Schema({
     "name": {
         type: String,
-        index: true
+        index: true,
+        default: ""
     },
     "type": {
         type: String,
-        index: true
+        index: true,
+        default: ""
     },
     "money":{
         type: Number,
@@ -23,7 +25,13 @@ const Accountbook = new Schema({
     },
     "detail": {
         type: String,
-        index: true
+        index: true,
+        default: ""
+    },
+     "history": {
+        type: Object,
+        index: true,
+        default: null
     },
     "user_email": {
         type: String,

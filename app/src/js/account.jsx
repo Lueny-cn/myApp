@@ -7,6 +7,9 @@ const IndexStore = require("../store/indexStore");
 const AccountAction = require('../action/accountAction');
 const AccountStore = require("../store/accountStore")
 const IndexItem = require("../subItem/indexItem");
+const AccBookAction = require('../action/accBookAction');
+const AccBookStore = require("../store/accBookStore")
+
 
 import { Carousel, Table, Icon, Button, Tabs } from 'antd';
 const AccountForm = require("../module/accountForm");
@@ -25,14 +28,19 @@ class Account extends React.Component {
 				user_id: "",
 				accountbook_id: "",
 			}
+			AccountAction.loadList();
+			AccBookAction.loadList();
 	}
 
 	static getStores() {
-			return [IndexStore];
+			return [AccountStore,AccBookStore];
 	}
 
 	static getPropsFromStores() {
-			return IndexStore.getState();
+			return {
+				...AccountStore.getState(),
+				...AccBookStore.getState()
+			}
 	}
 
 	onChangeTabs(key) {
@@ -50,14 +58,6 @@ class Account extends React.Component {
 		
     }
 
-    static getStores() {
-        return [AccountStore];
-    }
-
-    static getPropsFromStores() {
-        return AccountStore.getState();
-    }
-
     setValue(key, value) {
         this.state[key] = value;
         this.setState(this.state);
@@ -66,6 +66,7 @@ class Account extends React.Component {
 
 
 	render() {
+			let {result, accBook} = this.props;
 			let state = this.state,
 					title = '';
 			const columns = [{
@@ -170,26 +171,32 @@ class Account extends React.Component {
 					<div className="main-box">
 							<div className="sideleft account-form-box">
 									<Tabs onChange={this.onChangeTabs.bind(this)} type="card">
-											<TabPane tab="支出" key="1">
+											<TabPane tab="支出" key="0">
+												<AccountForm 
+													type={accountType[0]}
+													accBook={accBook}
+												/>
+											</TabPane>
+											<TabPane tab="收入" key="1">
 												<AccountForm 
 													type={accountType[1]}
+													accBook={accBook}
 												/>
 											</TabPane>
-											<TabPane tab="收入" key="2">
+											{
+												false && <TabPane tab="借入/借出" key="2">
 												<AccountForm 
-													type={accountType[2]}
-												/>
-											</TabPane>
-											<TabPane tab="借入/借出" key="3">
-												<AccountForm 
-														type={accountType[3]}
+														type={accountType[2]}
+													accBook={accBook}
 													/>
-											</TabPane>
-											<TabPane tab="转账/提现" key="4">
-												<AccountForm 
-														type={accountType[4]}
-													/>
-											</TabPane>
+												</TabPane> &&
+												<TabPane tab="转账/提现" key="3">
+													<AccountForm 
+															type={accountType[3]}
+															accBook={accBook}
+														/>
+												</TabPane>
+											}
 									</Tabs>
 
 

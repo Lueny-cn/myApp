@@ -2,7 +2,8 @@
 const route = require('koa-route');
 const userCtrl = require('../controllers/userCtrl');
 const accountCtrl = require("../controllers/accountCtrl")
-
+const accBookCtrl = require("../controllers/accBookCtrl")
+const uploadCtrl = require("../controllers/upload")
 module.exports = function (app) {
   // app.use(route.get(''), )
   
@@ -46,6 +47,12 @@ module.exports = function (app) {
     })
   }));
 
+  app.use(route.get('/uploadForm', function() {
+    return this.render('upload', {
+      title: '上传'
+    })
+  }));
+
   app.use(route.post( '/user/signup', userCtrl.signup ));
   app.use(route.post( '/user/signin', userCtrl.signin ));
   app.use(route.get( '/user/logout', userCtrl.logout ));
@@ -60,5 +67,8 @@ module.exports = function (app) {
   // app.use(route.get( '/user/account/incomeMoney', accountCtrl.incomeMoney ));
   app.use(route.get( '/user/account/incomeMoney/:dateRange', accountCtrl.incomeMoney ));
   app.use(route.get( '/user/account/outMoney/:dateRange', accountCtrl.outMoney ));
+  app.use(route.get( '/user/account/consumState', accountCtrl.consumState ));
   app.use(route.get( '/user/account/outMoney', accountCtrl.outMoney ));
+  app.use(route.get( '/user/accountBook/list', accBookCtrl.list ));
+  app.use(route.post( '/upload', uploadCtrl.upload ));
 }

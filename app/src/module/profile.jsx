@@ -1,35 +1,132 @@
-"use strict"
+"use strict";
 const React = require("react");
-import {Form, Input, Button, Checkbox ,Icon} from 'antd';
+const Nav = require("../module/nav");
+import {Form, Input, Select, Button, DatePicker,Radio, notification} from 'antd';
 const FormItem = Form.Item;
-const CreateForm = Form.create;
+const Option = Select.Option;
+const RadioGroup = Radio.Group;
 
-class AdminForm extends React.Component {
+const connectToStores = require("alt-utils/lib/connectToStores");
+const PerMsgAction = require("../action/perMsgAction");
+const PerMsgStore = require("../store/perMsgStore");
+const LoginAction = require('../action/loginAction');
+const LoginStore = require('../store/loginStore');
 
+class personMsg extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name:undefined,
+      gender:undefined,
+      tel:undefined,
+      birth:undefined,
+      school:undefined,
+      education:undefined
+    }
+
+    PerMsgStore.listen(this.getUserMsg())
+
+  }
+
+  static getStores() {
+    return [PerMsgStore,LoginStore];
+  }
+
+  static getPropsFromStores() {
+    return {
+      ...PerMsgStore.getState(),
+      ...LoginStore.getState()
+    }
+  }
+
+
+
+  componentDidMount(){
+    // LoginAction.isLogin();
+    PerMsgAction.getUserDetail();
+  }
+
+  componentWillUnmount(){
+    PerMsgStore.unlisten(this.listener)
+  }
+
+  getUserMsg(){
+    return this.listener = (store)=>{
+      console.log(store);
+      let {gender,nickname,tel,school,education,birth} = store.getUserMsg;
+      this.setState({
+        name:nickname,
+        gender:gender,
+        tel:tel,
+        birth:birth,
+        school:school,
+        education:education
+      })
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let {name,gender,tel,birth,school,education} = this.state;
+    PerMsgAction.updateMsg(name,gender,tel,birth,school,education);
+  }
+
+  openNotification = () => {
+    notification.open({
+      message: '您还未登陆',
+      description: '即将跳转到登陆页登陆',
+      duration: 2,
+    });
+  };
 
   render() {
-    // let {} = this.props;
-    const { getFieldDecorator,fun_num,handleSubmit } = this.props.form;
-    return <Form onSubmit={handleSubmit} key="5">
-            <FormItem>
-              {getFieldDecorator('level_one', {
-                rules: [{ required: true, message: '您输入的一级目录为空!' }],
-              })(
-                <Input addonBefore={<Icon type="plus" />} placeholder="一级目录名称" />
-              )}
-            </FormItem>
-            <FormItem>{getFieldDecorator('level_two', {
-              rules: [{ required: true, message: '您输入的二级目录为空!' }],
-            })(
-              <Input addonBefore={<Icon type="plus-circle" />} placeholder="二级目录名称" />
-            )}
-            </FormItem>
-            <FormItem>
-              <Button type="primary" htmlType="submit" className="login-form-button" key="5">
-                添加
-              </Button>
-            </FormItem>
-          </Form>;
+
+    let {isLogin,history,userMsg} = this.props;
+
+
+    return <div className="f-page personMsg" ref="personalMsg">
+        <Nav />
+      <Form onSubmit={this.handleSubmit.bind(this)}
+            className="personMsg-Form"
+            layout="inline">
+        <FormItem label="账号邮箱"
+                  labelCol={{span: 5}}
+                  wrapperCol={{span: 12}}
+                  required="true">
+          <Input value={window._test_data.email} disabled={true}/>
+        </FormItem>
+        <FormItem label="用户名"
+                  labelCol={{span: 5}}
+                  wrapperCol={{span: 12}}
+                  required="true">
+          <Input value={this.state.name} onChange={(e)=>{this.setState({name: e.target.value})}}/>
+        </FormItem>
+        <FormItem label="性别"
+                  labelCol={{span: 5}}
+                  wrapperCol={{span: 12}}>
+          <RadioGroup onChange={(e)=>{this.setState({gender: e.target.value})}} value={this.state.gender}>
+            <Radio value={0}>保密</Radio>
+            <Radio value={1}>男</Radio>
+            <Radio value={2}>女</Radio>
+          </RadioGroup>
+        </FormItem>
+        <FormItem label="绑定手机"
+                  labelCol={{span: 5}}
+                  wrapperCol={{span: 12}}>
+          <Input value={this.state.tel} onChange={(e)=>{this.setState({tel: e.target.value})}}/>
+        </FormItem>
+
+        <FormItem labelCol={{span: 5}}
+                  wrapperCol={{span: 12}} className="submit-btn">
+          <Button type="primary"
+                  htmlType="submit"
+                  className="change-sure" >确认修改</Button>
+        </FormItem>
+
+      </Form>
+    </div>
   }
 }
-module.exports = CreateForm()(AdminForm);
+
+module.exports = connectToStores(personMsg);

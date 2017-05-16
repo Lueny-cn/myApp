@@ -1,6 +1,3 @@
-/**
- * Created by zyy on 2016/12/29.
- */
 "use strict";
 const Flux = require("pin-alt/src/flux");
 const LoginAction = require("../action/loginAction");

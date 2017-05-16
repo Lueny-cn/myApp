@@ -10,7 +10,7 @@ const createHashHistory = require( 'history/lib/createHashHistory');
 const App = require("./app.jsx");
 const Index = require("./js/index");
 const Login = require("./js/login");
-const Profile = require("./js/profile");
+// const Profile = require("./js/");
 const Account = require("./js/account");
 const Report = require("./js/report");
 const Budget = require("./js/budget");
@@ -28,7 +28,7 @@ function requireLogin(nextState, replace){
             // replace(null, nextState.location.pathname);
             window.location.reload();
         } else {
-            replace({nextState: nextState}, '/login');
+            replace({nextState: nextState}, '/user/login');
         }
     }
 }
@@ -56,17 +56,16 @@ function requireLogin(nextState, replace){
 //
 // }
 
-
 // onEnter={requireLogin}
 
 let routes = <Router history={createHashHistory()}>
     <Route path="/" component={App}>
         <IndexRoute component={Index} />
         <Route path="user/login" component={Login} />
-        <Route path="user/profile" componen={Profile} />
-        <Route path="user/account" component={Account} />
-        <Route path="user/report" component={Report} />
-        <Route path="user/budget" component={Budget} />
+        {/*<Route path="user/profile" componen={Profile} />*/}
+        <Route path="user/account" component={Account} onEnter={requireLogin}/>
+        <Route path="user/report" component={Report} onEnter={requireLogin}/>
+        <Route path="user/budget" component={Budget} onEnter={requireLogin}/>
     </Route>
 </Router>;
 ReactDom.render(routes,document.getElementById("App"));
