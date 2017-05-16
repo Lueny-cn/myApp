@@ -95,11 +95,11 @@ class Index extends React.Component {
       dataIndex: 'money',
       key: 'money',
     }];
-
-    const data1 = [{
+    //TODO： 需要转化数据
+    const accbookData = [{
       key: '1',
-      index: '支付宝',
-      money: 6000
+      index: accBook[0].name,
+      money: accBook[0].money
     }];
     return <div className="f-page index">
 
@@ -123,7 +123,7 @@ class Index extends React.Component {
             </span>
             <h3>消费比例</h3>
           </div>
-          <Table columns={columns1} dataSource={data1} pagination={false} />
+          <Table columns={columns1} dataSource={accbookData} pagination={false} />
         </div>
 
         <div className="sidelright">
@@ -137,7 +137,7 @@ class Index extends React.Component {
                 <Icon type="setting" />
               </a>
             </div>
-            <Table columns={columns1} dataSource={data1} pagination={false} />
+            <Table columns={columns1} dataSource={accbookData} pagination={false} />
             <Button type="default" icon="plus" className="add-account-btn"></Button>
           </div>
         </div>
