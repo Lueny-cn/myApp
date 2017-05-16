@@ -80,16 +80,16 @@ console.log("user_email=== ", user_email)
             accountbook_id } = this.request.body;
         switch (option) {
             case "time":
-                result = yield AccountModel.find({ "time": time });
+                result = yield AccountModel.find({ "user_email": user_email, "time": time });
                 break;
             case "type":
-                result = yield AccountModel.find({ "type": type });
+                result = yield AccountModel.find({ "user_email": user_email, "type": type });
                 break;
             case "accountbook_id":
-                result = yield AccountModel.find({ "accountbook_id": accountbook_id });
+                result = yield AccountModel.find({ "user_email": user_email, "accountbook_id": accountbook_id });
                 break;
             default:
-                result = yield AccountModel.find();
+                result = yield AccountModel.find({ "user_email": user_email, });
         }
 
 
