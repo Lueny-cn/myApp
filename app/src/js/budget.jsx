@@ -1,42 +1,13 @@
 "use strict"
 const React = require("react");
-const Nav = require("../module/nav");
 const {Link} = require("react-router");
 const connectToStores = require("alt-utils/lib/connectToStores");
-const IndexStore = require("../store/indexStore");
-const AccountAction = require('../action/accountAction');
-const AccountStore = require("../store/accountStore")
-const IndexItem = require("../subItem/indexItem");
 
-import { Carousel, Table, Icon, Button, Tabs } from 'antd';
-const AccountForm = require("../module/accountForm");
-const AccountListItem = require("../module/accountListItem");
-const TabPane = Tabs.TabPane;
-
-class Budget extends React.Component {
+class AppIndex extends React.Component {
 	constructor(props) {
 			super(props);
 			this.state = {
-				type: "",
-				money: 0,
-				time: "",
-				avatar: "",
-				detail: "",
-				user_id: "",
-				accountbook_id: "",
 			}
-	}
-
-	static getStores() {
-			return [IndexStore];
-	}
-
-	static getPropsFromStores() {
-			return IndexStore.getState();
-	}
-
-	onChangeTabs(key) {
-		console.log(key);
 	}
 
 
@@ -51,12 +22,12 @@ class Budget extends React.Component {
     }
 
     static getStores() {
-        return [AccountStore];
+       return null;
     }
 
     static getPropsFromStores() {
-        return AccountStore.getState();
-    }
+        return null;
+	}
 
     setValue(key, value) {
         this.state[key] = value;
@@ -70,11 +41,20 @@ class Budget extends React.Component {
 
 			return <div className="f-page index">
 					
-					<Nav/>
+					<div className="m-main">
+						<h2>题　目：基于React和NodeJs实现的记账本系统</h2>
+						<h3>班　级：13级计算机科学与技术2班</h3>
+						<h3>姓　名：卢文友</h3>
+						<h3>指导老师：李胜莲</h3>
+						<Link to="/user/index" className="btn_yu">
+							进入记账系统
+						</Link>
+					</div>
+					
 
 							
 			</div>;
 	}
 }
 
-module.exports = connectToStores(Budget);
+module.exports = connectToStores(AppIndex);

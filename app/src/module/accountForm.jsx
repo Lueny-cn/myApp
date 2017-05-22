@@ -15,6 +15,7 @@ import {
 const FormItem = Form.Item;
 const CreateForm = Form.create;
 const RangePicker = DatePicker.RangePicker;
+const Option = Select.Option;
 const TreeType = require("../config/tyeeType")
 const AccountAction = require('../action/accountAction');
 const AccountStore = require("../store/accountStore")
@@ -74,7 +75,7 @@ class AccountForm extends React.Component {
 			// rangeValue[1].format('YYYY-MM-DD')]
 			};
 
-			console.log('Received values of form: ', values);
+			// console.log('Received values of form: ', values);
 
 			let data = {
 				type: values.way,
@@ -86,9 +87,8 @@ class AccountForm extends React.Component {
 				account_type: this.props.type
 			}
 
-			AccountAction.addAccount(data);
+			  AccountAction.addAccount(data);
       });
-
 	}
 
 	// handleToggle() {   $('#stateBut').on('click',function(){
@@ -96,45 +96,62 @@ class AccountForm extends React.Component {
 
 	onChangeWay(value) {
 		onChange = (value) => {
-		console.log(arguments);
+		// console.log(arguments);
 		this.setState({value});
 		}
 	}
 
 	handleChangeIncome(value) {
-		console.log(`selected ${value}`);
+		// console.log(`selected ${value}`);
 	}
 
 	handleChangeBook(value) {
-		console.log(`selected ${value}`);
+		// console.log(`selected ${value}`);
 	}
 
 	handleChangeUpload (e) {
-		console.log("upload------------------",)
+		// console.log("upload------------------",)
 	}
 	normFile = (e) => {
-		console.log('Upload event:', e);
+		// console.log('Upload event:', e);
 		if (Array.isArray(e)) {
 		return e;
 		}
 		return e && e.fileList;
 	}
 
-    componentWillMount() {
-      let {type, accBook} = this.props;
+    componentDidMount() {
+      let {type} = this.props;
 
-	  console.log('accBook==========form', accBook)
       this.setState({
-        isIncome: type === "income",
-        isOut: type === "out",
-        isDebit: type === "debit",
-        isTransfer: type === "transfer"
-      })
+          isIncome: type === "income",
+          isOut: type === "out",
+          isDebit: type === "debit",
+          isTransfer: type === "transfer"
+      });
+    }
 
+    disabledEndDate = (endValue) => {
+      const startValue = new Date();
+      if (!endValue || !startValue) {
+          return false;
+      }
+      return endValue.valueOf() > startValue.valueOf();
     }
 
     render() {
-        let {accBook} = this.props;
+      let {accBook} = this.props;
+      let accbookName = [];
+
+      if(!accBook) {
+          accbookName=["我的钱包"];
+       } else {
+         accBook.map((item)=>{
+            accbookName.push(item.name)
+          });
+       }
+        console.log(" state " ,this.state)
+        console.log(" state " ,this.state)
         const { getFieldDecorator, } = this.props.form;
         const formItemLayout = {
           labelCol: { span: 2 },
@@ -153,16 +170,16 @@ class AccountForm extends React.Component {
           wrapperCol: { span: 10 },
         };
 
-		const displayRender = (labels, selectedOptions) => labels.map((label, i) => {
-			const option = selectedOptions[i];
-			if (i === labels.length - 1) {
-				return (
-				<span key={option.value}>
-					{label}
-				</span>
-				);
-			}
-		});
+      const displayRender = (labels, selectedOptions) => labels.map((label, i) => {
+        const option = selectedOptions[i];
+        if (i === labels.length - 1) {
+          return (
+          <span key={option.value}>
+            {label}
+          </span>
+          );
+        }
+      });
 
 
         return <Form className="acountForm"
@@ -182,7 +199,9 @@ class AccountForm extends React.Component {
                     {...formItemLayout}
                   >
                     {getFieldDecorator('time', config)(
-                    <DatePicker />
+                    <DatePicker disabledDate={this.disabledEndDate}
+                      
+                    />
                   )}
                   </FormItem>
                   <FormItem 
@@ -195,9 +214,11 @@ class AccountForm extends React.Component {
                           ],
                         })(
                         <Select placeholder="请选择账户" onChange={this.handleChangeBook.bind(this)}>
-							
-                            <Option value="我的钱包">我的钱包</Option>
-                            <Option value="支付宝">支付宝</Option>
+                            {
+                              accbookName.map((item)=> {
+                                return  <Option value={item}>{item}</Option>
+                              })
+                            }
                         </Select>
                     )}
                     </FormItem>
@@ -207,15 +228,16 @@ class AccountForm extends React.Component {
                       label="用途"
                       {...formItemLayout}
                     >
-                      {getFieldDecorator('way', {
+                      {getFieldDecorator('value', {
                           rules: [{ required: true, message: '用途为空,请输入' }],
                         })(
                         
                           <Cascader
-								options={TreeType}
-								displayRender={displayRender}
-								style={{ width: 290 }}
-							/>
+                            onChange={this.onChangeCascader}
+                            options={TreeType}
+                            displayRender={displayRender}
+                            style={{ width: 290 }}
+                          />
                         )}
                       
                       </FormItem>
@@ -230,7 +252,7 @@ class AccountForm extends React.Component {
                             rules: [{ required: true, message: '用途为空,请输入' }],
                           })(
                           
-                            <Select placeholder="请选择账户" onChange={this.handleChangeIncome.bind(this)}>
+                            <Select placeholder="请选择账户">
                                 <Option value="工资">工资</Option>
                                 <Option value="奖金">奖金</Option>
                                 <Option value="other">其它收入</Option>
@@ -249,7 +271,7 @@ class AccountForm extends React.Component {
                             rules: [{ required: true, message: '用途为空,请输入' }],
                           })(
                           
-                            <Select placeholder="请选择账户" onChange={this.handleChangeIncome.bind(this)}>
+                            <Select placeholder="请选择账户" >
                                 <Option value="工资">工资</Option>
                                 <Option value="奖金">奖金</Option>
                                 <Option value="other">其它收入</Option>

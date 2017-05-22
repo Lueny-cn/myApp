@@ -82,6 +82,11 @@ User.statics.findById = function (id) {
         .exec();
 };
 
+User.statics.updatePwd = function (email, user) {
+    return this.update({email: email}, {
+        "password": user.password
+    }).exec();
+};
 //创建模型
 const model = mongoose.model('User', User);
 

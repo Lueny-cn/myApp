@@ -10,13 +10,11 @@ const createHashHistory = require( 'history/lib/createHashHistory');
 const App = require("./app.jsx");
 const Index = require("./js/index");
 const Login = require("./js/login");
-// const Profile = require("./js/");
+const AppIndex = require("./js/appIndex");
 const Account = require("./js/account");
 const Report = require("./js/report");
 const Budget = require("./js/budget");
-// const LoginAction = require('./action/loginAction');
-// const LoginStore = require('./store/loginStore');
-// const connectToStores = require("alt-utils/lib/connectToStores");
+const UserManager = require("./js/userManager");
 
 
 function requireLogin(nextState, replace){
@@ -65,7 +63,8 @@ let routes = <Router history={createHashHistory()}>
         {/*<Route path="user/profile" componen={Profile} />*/}
         <Route path="user/account" component={Account} onEnter={requireLogin}/>
         <Route path="user/report" component={Report} onEnter={requireLogin}/>
-        <Route path="user/budget" component={Budget} onEnter={requireLogin}/>
+        <Route path="user/usermanager" component={UserManager} onEnter={requireLogin}/>
+        <Route path="user/index" component={AppIndex}/>
     </Route>
 </Router>;
 ReactDom.render(routes,document.getElementById("App"));

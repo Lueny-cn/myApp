@@ -12,13 +12,13 @@ class AccBookstore {
     onAddaccBookSuccess(result){
         this.accBook = result;
     }
-    onLoadListSuccess(result){
+    onListSuccess(result){
         this.accBook = result;
     }
     onUpdateSuccess(result){
         this.accBook = result;
     }
-    onDeleteSuccess(result){
+    onRemoveSuccess(result){
         this.accBook = result;
     }
 

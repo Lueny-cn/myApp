@@ -1,5 +1,6 @@
 "use strict";
 const Flux = require("pin-alt/src/flux");
+const { message } =  require("antd");
 class PersonalMsgAction {
 
     constructor(){
@@ -31,18 +32,16 @@ class PersonalMsgAction {
         })
     }
 
-    updateMsg(name,gender,tel,birth,school,education){
+    updateMsg(name,gender,tel,birthday){
         let sUrl = this.url["update"];
         $.ajax({
             url:sUrl,
             type:'post',
             data:{
-                nikename:name,
+                nickname:name,
                 gender:gender,
                 tel:tel,
-                birthday:birth,
-                school:school,
-                education:education
+                birthday:birthday,
             },
             dataType:'json',
             xhrFields: {withCredentials : true},
@@ -50,7 +49,12 @@ class PersonalMsgAction {
             success:(result)=>{
                 if(result.code == 200){
                     this.updateMsgSuccess(result.data);
+                    message.success("资料更新成功");
+                    setTimeout( ()=> {
+                        window.location.reload();
+                    }, 1000)
                 }else{
+                    message.error(result.msg);
                     this.updateMsgFail();
                 }
             },

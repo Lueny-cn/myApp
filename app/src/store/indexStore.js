@@ -5,9 +5,15 @@ class IndexStore{
   constructor(){
     this.bindActions(IndexAction);
 
-  }
-   onGetConsumStateSuccess(result){
+    }
+    onGetConsumStateSuccess(result){
         this.result = result;
+    }
+    onGetEachMonthOutSuccess(result){
+        this.outMList = result;
+    }
+    onGetEachMonthIncomeSuccess(result){
+        this.incomeMList = result;
     }
 
     onGetConsumStateGFail(){}

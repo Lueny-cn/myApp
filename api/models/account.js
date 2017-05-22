@@ -67,7 +67,7 @@ Account.statics.delete = function (id) {
 };
 
 Account.statics.update = function (item) {
-    return this.updae({"_id": item._id}, {
+    return this.update({"_id": item._id}, {
         "type":  item.type,
         "money": item.money ,
         "time": item.time,
@@ -75,7 +75,7 @@ Account.statics.update = function (item) {
         "detail": item.detail,
         "user_email": item.user_email,
         "accountbook_id": item.accountbook_id
-    });
+    }).exec();
 };
 
 

@@ -6,13 +6,13 @@ class AccBookAction {
     constructor(){
         this.url = {
             add:'http://localhost:3000/user/accountBook/add',
-            list:'http://localhost:3000/user/accountBook/list',
             update:'http://localhost:3000/user/accountBook/update',
-            remove: 'http://localhost:3000/user/accountBook/delete',
-            loadList: 'http://localhost:3000/user/accountBook/list'
+            remove: 'http://localhost:3000/user/accountBook/remove',
+            list: 'http://localhost:3000/user/accountBook/list'
         };
-        this.generateActions('addAccBookSuccess','addAccBookFail','deleteSuccess','deleterFail',
-        'isLoginSuccess','isLoginFail',"listSucess", "listFail", "updateSucess","updateFail","loadListSuccess","loadListFail");
+        this.generateActions('addAccBookSuccess','addAccBookFail',"removeSuccess","removeFail",
+        'isLoginSuccess','isLoginFail',"listSuccess", "listFail", "updateSucess","updateFail",
+        "updateSuccess","updateFail");
     }
 
 
@@ -26,10 +26,13 @@ class AccBookAction {
                 xhrFields: {withCredentials : true},
                 crossDomain: true,
                 success: (result)=> {
-                    if(result) {
+                    if(result.code == 200) {
                         this.addAccBookSuccess(result.data);
+                        message.success("账本添加成功");
+                        window.reload();
                     }else {
                         this.addAccBookFail();
+                        message.error(result.msg);
                     }
                 },
                 error: ()=> {
@@ -38,8 +41,8 @@ class AccBookAction {
             });
     }
 
-    loadList() {
-        let sUrl = this.url["loadList"];
+    list() {
+        let sUrl = this.url["list"];
             $.ajax({
                 url: sUrl,
                 type: 'get',
@@ -48,13 +51,63 @@ class AccBookAction {
                 crossDomain: true,
                 success: (result)=> {
                     if(result) {
-                        this.loadListSuccess(result.data);
+                        this.listSuccess(result.data);
                     }else {
-                        this.loadListFail();
+                        this.listFail();
                     }
                 },
                 error: ()=> {
-                    this.loadListFail();
+                    this.listFail();
+                }
+            });
+    }
+
+    updateBook(data) {
+        let sUrl = this.url["update"];
+            $.ajax({
+                url: sUrl,
+                type: 'post',
+                dataType:"json",
+                data: data,
+                xhrFields: {withCredentials : true},
+                crossDomain: true,
+                success: (result)=> {
+                    if(result.code == 200) {
+                        this.updateSuccess(result);
+                        message.success(result.msg);
+                        window.location.reload();
+                    }else {
+                        message.error(result.msg);
+                        // this.updateFail();
+                    }
+                },
+                error: ()=> {
+                    this.updateFail();
+                }
+            });
+    }
+
+    removeBook(data) {
+        let sUrl = this.url["remove"];
+            $.ajax({
+                url: sUrl,
+                type: 'post',
+                dataType:"json",
+                data: data,
+                xhrFields: {withCredentials : true},
+                crossDomain: true,
+                success: (result)=> {
+                    if(result.code == 200) {
+                        this.removeSuccess(result);
+                        message.success(result.msg);
+                        window.reload();
+                    }else {
+                        message.error(result.msg);
+                        // this.removeFail();
+                    }
+                },
+                error: ()=> {
+                    this.removeFail();
                 }
             });
     }

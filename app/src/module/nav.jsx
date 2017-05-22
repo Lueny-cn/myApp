@@ -32,10 +32,12 @@ class Nav extends React.Component {
     LoginAction.isLogin();
   }
 
-  logout(){
-    LoginAction.logOut();
-    LoginAction.isLogin();
 
+  handleClick = (e) => {
+    if(e.key === 'out'){
+      LoginAction.logOut();
+      LoginAction.isLogin();
+    }
   }
 
 
@@ -59,7 +61,7 @@ class Nav extends React.Component {
           <Icon type="appstore"/>记账
         </Link>}>
         </SubMenu>
-        <SubMenu title={<Link to="/user/budget">
+        <SubMenu title={<Link to="/user/usermanager">
           <Icon type="appstore"/>管理
         </Link>}>
         </SubMenu>
@@ -71,12 +73,12 @@ class Nav extends React.Component {
                        <Icon type="user"/>{user}
                      </Link>}>
 
-            <Menu.Item key="setting:1">
-              <Link to="/user/profile">
+            <Menu.Item key="personal">
+              <Link to="/user/usermanager">
                 <Icon type="user"/>个人中心
               </Link>
             </Menu.Item>
-            <Menu.Item key="setting:2" onClick={()=>{this.logout()}}>
+            <Menu.Item key="out">
               <Icon type="poweroff"/>退出登录</Menu.Item>
           </SubMenu>
           :

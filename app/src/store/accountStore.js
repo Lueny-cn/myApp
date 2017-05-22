@@ -13,16 +13,16 @@ class AccountStore{
         this.result = result;
     }
     onListSuccess(result){
-        this.result = result;
+        this.account = result;
     }
     onUpdateSuccess(result){
-        this.result = result;
+        this.account = result;
     }
     onDeleteSuccess(result){
-        this.result = result;
+        this.account = result;
     }
     onLoadListSuccess(result){
-        this.result = result;
+        this.account = result;
     }
 
   

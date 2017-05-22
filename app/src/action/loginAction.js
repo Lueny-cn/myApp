@@ -11,9 +11,10 @@ class LoginAction {
             login:'http://localhost:3000/user/signin',
             register:'http://localhost:3000/user/signup',
             logOut:'http://localhost:3000/user/logout',
-            isLogin:'http://localhost:3000/user/isLogin'
+            isLogin:'http://localhost:3000/user/isLogin',
+            changePsd:'http://localhost:3000/user/updatePassword'
         };
-        this.generateActions('loginSuccess','loginFail','registerSuccess','registerFail','logoutSuccess','logoutFail','isLoginSuccess','isLoginFail');
+        this.generateActions('loginSuccess','loginFail','registerSuccess','registerFail','logoutSuccess','logoutFail','isLoginSuccess','isLoginFail',"changePsdSuccess","changePsdFail");
     }
 
     login(email,psd){
@@ -29,11 +30,11 @@ class LoginAction {
             crossDomain: true,
             dataType:"json",
             success: (result)=> {
-                // if(result.code == 200) {
+                if(result.code == 200) {
                     this.loginSuccess(result);
-                // }else{
-                //     this.loginFail();
-                // }
+                }else{
+                    this.loginFail();
+                }
             },
             error: ()=> {
                 this.loginFail();
@@ -55,6 +56,8 @@ class LoginAction {
             success: (result)=> {
                 if(result.code == 200) {
                     this.registerSuccess(result);
+                    message.success(result.msg + ',请登录', 2);
+                    window.location.reload();
                 }else{
                     this.registerFail();
                     message.error(result.msg, 5)
@@ -76,6 +79,7 @@ class LoginAction {
             crossDomain: true,
             success: (result)=> {
                 if(result.code == 200) {
+                    message.success('退出成功', 2);
                     this.logoutSuccess(result);
                 }else{
                     this.logoutFail();
@@ -106,6 +110,32 @@ class LoginAction {
             }
         });
     }
+    changePsd(pre,newpsd){
+      let sUrl = this.url["changePsd"];
+      $.ajax({
+        url: sUrl,
+        type: 'post',
+        dataType:"json",
+        data:{
+          pre_password:pre,
+          new_password:newpsd
+        },
+        xhrFields: {withCredentials : true},
+        crossDomain: true,
+        success: (result)=> {
+          if(result.code == 200) {
+            this.changePsdSuccess(result);
+            message.success('更新成功')
+          }else {
+            this.changePsdFail();
+          }
+        },
+        error: ()=> {
+          this.changePsdFail();
+        }
+      });
+    }
+
 
 
 }

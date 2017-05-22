@@ -10,7 +10,9 @@ const Schema = mongoose.Schema;
 const Accountbook = new Schema({
     "name": {
         type: String,
-        index: true,
+        index: {
+            unique: true
+        },
         default: ""
     },
     "type": {
@@ -57,6 +59,17 @@ Accountbook.statics.add = function (data) {
     return this.create(data);
 };
 
+Accountbook.statics.updateByName = function (data) {
+    return this.update({"name": data.name},{
+        "type": data.type,
+        "money": data.money,
+        "detail": data.detail
+    }).exec();
+};
+
+Accountbook.statics.findByName = function (name) {
+    return this.find({"name": name}).exec();
+};
 
 //创建模型
 const model = mongoose.model('Accountbook', Accountbook);

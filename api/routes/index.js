@@ -60,6 +60,7 @@ module.exports = function (app) {
   app.use(route.get( '/user/list', userCtrl.list ));
   app.use(route.get( '/user/getDetail', userCtrl.getUserDetail ));
   app.use(route.post( '/user/update', userCtrl.update ));
+  app.use(route.post( '/user/updatePassword', userCtrl.updatePassword ));
   app.use(route.post( '/user/account/add', accountCtrl.add ));  
   app.use(route.get( '/user/account/list', accountCtrl.list ));
   app.use(route.post( '/user/account/update', accountCtrl.update ));  
@@ -67,9 +68,11 @@ module.exports = function (app) {
   // app.use(route.get( '/user/account/incomeMoney', accountCtrl.incomeMoney ));
   app.use(route.get( '/user/account/incomeMoney/:dateRange', accountCtrl.incomeMoney ));
   app.use(route.get( '/user/account/outMoney/:dateRange', accountCtrl.outMoney ));
+  app.use(route.get( '/user/account/listEachMonth/:type', accountCtrl.listEachMonth ));
   app.use(route.get( '/user/account/consumState', accountCtrl.consumState ));
   app.use(route.get( '/user/account/outMoney', accountCtrl.outMoney ));
   app.use(route.get( '/user/accountBook/list', accBookCtrl.list ));
   app.use(route.post( '/user/accountBook/add', accBookCtrl.add ));
+  app.use(route.post( '/user/accountBook/remove', accBookCtrl.remove ));
   app.use(route.post( '/upload', uploadCtrl.upload ));
 }

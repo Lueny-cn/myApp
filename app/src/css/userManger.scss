@@ -1,0 +1,50 @@
+.f-page.userManger{
+  overflow: hidden;
+  background: #f8f8f8;
+
+  .ant-tabs{
+    margin: 66px 300px;
+    padding-top: 20px;
+    background: #fff;
+    border-radius: 5px;
+    min-height: 200px;
+  }
+
+  .ant-tabs-nav-scroll {
+    padding: 0 50px;
+  }
+
+  .personMsg-Form,.change-psd,.delete-database{
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .ant-btn-primary {
+    width: 50%;
+    margin: 0 49px 0 104px;
+    display: block;
+  }
+  .delete-database{
+    font-size: 14px;
+    line-height: 2;
+
+  }
+}
+.book-edit {
+    h3 {
+        border-bottom: 1px solid;
+        padding: 10px;
+    }
+
+    .ant-btn-primary {
+      margin: 0 49px 0 104px;
+      width: 50%;
+      margin: 0 49px 0 104px;
+      display: block;
+    }
+
+}
+.accBook-Form {
+   max-width: 500px;
+   margin: 30px 50px;
+}

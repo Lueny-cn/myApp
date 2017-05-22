@@ -505,5 +505,61 @@ console.log("user_email=== ", user_email)
                msg: "消费情况"
            }
        }
+    },
+
+    listEachMonth: function *(type) {
+        let user_email;
+        if(this.session && this.session.user) {
+            user_email = this.session.user.email;
+        }
+        let incomeList = [0,0,0,0,0,0,0,0,0,0,0,0],
+            outList = [0,0,0,0,0,0,0,0,0,0,0,0];
+        if(type === "income") {
+            let n = 12;
+            while(n >= 1) {
+                 let result = yield AccountModel.find({
+                            "account_type": "income",
+                            "user_email": user_email,
+                            "time": {
+                                $gte: ISODate(dateRangeUtil.getPreviousMonth(n)[0]),
+                                $lt: ISODate(dateRangeUtil.getPreviousMonth(n)[1])
+                            }
+                        }, { "money": 1 });
+                let sum = 0;
+                result.map((item) => {
+                    sum += item.money
+                });
+                incomeList[--n] = sum;
+            }
+
+            this.body = {
+                code: 200,
+                data: incomeList
+            }
+           
+
+        } else if(type === "out") {
+             let n = 12;
+             while(n >= 1) {
+                 let result = yield AccountModel.find({
+                    "account_type": "out",
+                    "user_email": user_email,
+                    "time": {
+                        $gte: ISODate(dateRangeUtil.getPreviousMonth(n)[0]),
+                        $lt: ISODate(dateRangeUtil.getPreviousMonth(n)[1])
+                    }
+                }, { "money": 1 });
+                let sum = 0;
+                result.map((item) => {
+                    sum += item.money
+                });
+                outList[--n] = sum;
+            }
+
+            this.body = {
+                code: 200,
+                data: outList
+            }
+        }
     }
 }
